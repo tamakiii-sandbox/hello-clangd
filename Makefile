@@ -11,10 +11,21 @@ dependencies:
 	@type git > /dev/null
 
 build: \
-	build/llvm
+	build/llvm \
+	build/clang-tools-extra
 
 build/llvm: deps/llvm/llvm-project/llvm
-	mkdir -p $@ && cd $@ && cmake $<
+	cmake \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-S $< \
+		-B $@
+
+build/clang-tools-extra: deps/llvm/llvm-project/llvm
+	cmake \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DLLVM_ENABLE_PROJECTS="clang-tools-extra" \
+		-S $< \
+		-B $@
 
 deps/llvm/llvm-project: deps/llvm
 	git clone --depth 1 git@github.com:llvm/llvm-project.git $@

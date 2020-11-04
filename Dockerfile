@@ -6,6 +6,8 @@ RUN apt-get update && \
       cmake \
       less \
       python2 \
+      man \
+      clang-7-doc \
       && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
